@@ -1,0 +1,23 @@
+# h2
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/jpashop
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  # jpa
+  jpa:
+    repository:
+      bootstrap-mode: default
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    open-in-view: false
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type: trace

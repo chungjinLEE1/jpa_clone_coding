@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "orders")
 @Setter
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +55,47 @@ public class Order {
         this.delivery = delivery;
         delivery.setOrder(this);
     }
+
+//    생성 메서드
+    public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems){
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for(OrderItem orderItem : orderItems){
+            order.addOrderItem(orderItem);
+        }
+
+        order.setStatus(OrderStatus.Order);
+        order.setOrderDate(LocalDateTime.now());
+        return order;
+    }
+
+//   주문 취소
+    public void cancel(){
+        if(delivery.getStatus() == DeliveryStatus.COMP){
+            throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
+        }
+
+        this.setStatus(OrderStatus.Cancel);
+        for(OrderItem orderITem : orderItems){
+            orderITem.cancel();
+        }
+    }
+
+//    조회로직
+    /*
+    * 전체 주문 가격 조회
+    * */
+    public int getTotalPrice(){
+        int totalPrice = 0;
+        for(OrderItem orderItem : orderItems){
+            totalPrice += orderItem.getTotalPrice();
+        }
+        return totalPrice;
+    }
+
+
+
 
 //    public static void main(String[] args){
 //        Member member = new Member();

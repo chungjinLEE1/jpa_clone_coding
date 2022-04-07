@@ -21,7 +21,7 @@ import java.util.List;
 @DiscriminatorColumn(name = "dtype")
 public abstract class Item {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     @Column(name="item_id")
     private Long id;
 

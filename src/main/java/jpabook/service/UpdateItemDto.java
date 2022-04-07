@@ -1,18 +1,20 @@
 package jpabook.service;
 
-import jpabook.domain.item.Book;
 import jpabook.domain.item.Item;
 import jpabook.repository.ItemRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Getter @Setter
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class ItemService {
+public class UpdateItemDto {
 
     private final ItemRepository itemRepository;
 
@@ -36,6 +38,5 @@ public class ItemService {
     public Item findOne(Long itemId){
         return itemRepository.findOne(itemId);
     }
-
 
 }

@@ -20,7 +20,7 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
     // 주문
-    @Transactional
+    @Transactional(readOnly = true)
     public Long order(Long memberId, Long itemId, int count){
 
         // 엔티티 조회
@@ -45,7 +45,7 @@ public class OrderService {
     }
 
     // 취소
-    @Transactional
+    @Transactional(readOnly = true)
     public void cancelOrder(Long orderId){
         // 주문 엔티티 조회
         Order order = orderRepository.findOne(orderId);
@@ -53,13 +53,9 @@ public class OrderService {
         order.cancel();
     }
 
-
-//    // 검색
-//    public List<Order> findOrders(OrderStatus orderSearch){
-//        return orderRepository.findAll(orderSearch);
-//    }
-
-
-
+    //검색
+    public List<Order> findOrders(OrderSearch orderSearch) {
+        return orderRepository.findAllByString(orderSearch);
+    }
 
 }

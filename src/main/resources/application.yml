@@ -10,7 +10,7 @@ spring:
     repository:
       bootstrap-mode: default
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         show_sql: true

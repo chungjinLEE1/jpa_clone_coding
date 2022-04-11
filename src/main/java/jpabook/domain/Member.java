@@ -1,5 +1,6 @@
 package jpabook.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class Member  {
     @NotEmpty
     private String name;
 
-
+    @JsonIgnore
     @Embedded
     private Address address;
 

@@ -1,5 +1,6 @@
 package jpabook.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -24,11 +25,12 @@ public class Order {
     @JoinColumn(name="member_id")
     private Member member;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
 
 
-
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Delivery delivery;
 
@@ -65,7 +67,7 @@ public class Order {
             order.addOrderItem(orderItem);
         }
 
-        order.setStatus(OrderStatus.Order);
+        order.setStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());
         return order;
     }
@@ -76,9 +78,9 @@ public class Order {
             throw new IllegalStateException("이미 배송완료된 상품은 취소가 불가능합니다.");
         }
 
-        this.setStatus(OrderStatus.Cancel);
-        for(OrderItem orderITem : orderItems){
-            orderITem.cancel();
+        this.setStatus(OrderStatus.CANCEL);
+        for(OrderItem orderItem : orderItems){
+            orderItem.cancel();
         }
     }
 

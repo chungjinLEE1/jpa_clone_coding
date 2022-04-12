@@ -31,6 +31,7 @@ public class ItemController {
     @PostMapping("/items/new")
     public String create(BookForm form){
         Book book = new Book();
+
         book.setName(form.getName());
         book.setPrice(form.getPrice());
         book.setStockQuantity(form.getStockQuantity());
@@ -54,11 +55,12 @@ public class ItemController {
 
         BookForm form = new BookForm();
         form.setId(item.getId());
-        form.setName(form.getName());
-        form.setPrice(form.getPrice());
+        form.setName(item.getName());
+        form.setPrice(item.getPrice());
         form.setStockQuantity(item.getStockQuantity());
         form.setAuthor(item.getAuthor());
         form.setIsbn(item.getIsbn());
+
 
         model.addAttribute("form", form);
         return "items/updateItemForm";
